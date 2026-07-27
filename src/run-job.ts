@@ -107,9 +107,12 @@ async function main() {
   }
 
   await pool.end()
-  // The exit code is the job's own, so the platform's run history agrees with
-  // ours about whether it worked.
-  process.exit(outcome.status === "succeeded" ? 0 : 1)
+  // The wrapper exits 0 even when the job failed. A cron service carries the
+  // platform's default restart policy - on failure, ten times - and passing the
+  // job's exit code up would turn one failed run into ten immediate reruns and
+  // ten alerts. The real outcome is the row in the history and the message you
+  // just received.
+  process.exit(0)
 }
 
 main().catch(async (error) => {

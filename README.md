@@ -67,6 +67,11 @@ Worth knowing before you rely on it:
 - **The service must exit.** A start command that keeps running turns your cron
   job into a service you pay for continuously — which is exactly the problem
   this template exists to avoid.
+- **A failing job would be restarted ten times** under the platform's default
+  restart policy. So the wrapper always exits 0: the failure is in the history
+  and in the alert, not in the exit code. The trade is deliberate — the
+  platform's own execution list will say the run finished, while the history
+  page tells you the truth.
 
 ## Configuration
 

@@ -31,7 +31,7 @@ This template uses the platform's scheduler and adds the missing half.
 
 - **The job service exits.** That is what makes it a scheduled job rather than a service you pay for continuously — and a start command that keeps running would silently turn it back into one.
 - **Every run is a row** — started, finished, duration, exit code and output, capped at 64 KB so a job printing in a loop cannot produce a row too large to store.
-- **The exit code is passed through**, so the platform's own run history and this one agree about whether the job worked.
+- **The wrapper always exits 0.** A cron service carries the platform's default restart policy — on failure, ten times — so passing a failed job's exit code up would turn one bad run into ten immediate reruns and ten alerts. The outcome lives in the history row and the alert instead; the platform's execution list will say the run finished, and the history page is the one that tells you the truth.
 - **A timeout ends in `SIGKILL`**, because a job that ignores signals is the job a timeout exists for.
 - **An advisory lock keyed on the job name.** The platform already skips a scheduled start while the previous one runs, but a manual redeploy does not go through the scheduler — and two copies of a job that sends invoices is the failure worth preventing.
 - **A run that never reported back is marked `lost`** after an hour. Otherwise a container the platform replaced mid-run leaves a row stuck at "running", and every later execution is skipped as an overlap.
