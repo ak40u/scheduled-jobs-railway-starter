@@ -1,0 +1,29 @@
+{
+  "name": "scheduled-jobs-railway-starter",
+  "version": "1.0.0",
+  "description": "Scheduled jobs on Railway's own scheduler, with a run history and failure alerts",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/history.js",
+    "job": "node dist/run-job.js",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "type": "module",
+  "dependencies": {
+    "express": "^5.2.1",
+    "pg": "^8.22.0"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/node": "^26.1.2",
+    "@types/pg": "^8.20.0",
+    "typescript": "^5.9.3"
+  },
+  "private": true,
+  "engines": {
+    "node": ">=22"
+  }
+}
